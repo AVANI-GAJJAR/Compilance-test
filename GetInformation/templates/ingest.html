@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}
+Ingest Page
+{% endblock title %}
+
+{% block body %}
+
+<script>
+    function fileValidation() {
+        var fileInput =
+            document.getElementById('file');
+         
+        var filePath = fileInput.value;
+     
+        // Allowing file type
+        var allowedExtensions =
+                /(\.csv|\.pdf|\.docx)$/i;
+         
+        if (!allowedExtensions.exec(filePath)) {
+            alert('Invalid file type. Accepted File types are CSV,PDF and DOCX');
+            fileInput.value = '';
+            return false;
+        }
+    }
+</script>
+
+    <div class="mx-auto" style="width: 500px" ;>
+        <form action="filetype" method="post" class="form-horizontal">
+            {% csrf_token%}
+            
+                <h2 style="text-align:center;">Upload File</h2>
+            
+
+            <center>
+            <div class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                <input type="file" id="file" name="filename" onchange="return fileValidation()" >
+            </center>
+            <center><button type="submit" class="btn btn-primary my-4">Upload</button></center>
+            <br />
+            <div class="form-group">
+                {% for message in messages %}
+                <div class="alert alert-danger" role="alert">
+                    {{message}}
+                </div>
+                {% endfor %}
+            </div>
+        </form>
+{%endblock body%}
