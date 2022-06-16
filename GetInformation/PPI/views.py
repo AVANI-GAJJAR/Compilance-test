@@ -2,6 +2,7 @@ import re,ftplib
 from django.shortcuts import render
 from django.http import HttpResponse
 from PPI.models import IngestData
+from PPI.forms import ProfileForm
 #from PPI.models import ppi
 # Create your views here.
 def index(request):
@@ -11,11 +12,11 @@ def filetype(request):
    saved = False
    if request.method == "POST":
       #Get the posted form
-      MyForm = IngestData(request.POST, request.FILES)
+      MyForm =ProfileForm(request.POST, request.FILES)
       
       if MyForm.is_valid():
-         obj= IngestData()
-         obj.fname = MyForm.cleaned_data["filename"]
+         obj=IngestData()
+         obj.fname=MyForm.cleaned_data["filename"]
          obj.save()
          saved = True
    else:
