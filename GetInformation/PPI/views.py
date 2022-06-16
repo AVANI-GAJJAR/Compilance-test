@@ -11,7 +11,11 @@ def index(request):
 def filetype(request):
    saved = False
    if request.method == "POST":
-      #Get the posted form
+      upload1=request.POST.get('filename', False)
+      object=IngestData.objects.create(file=upload1)
+      object.save()  
+      context=IngestData.objects.all()
+      '''#Get the posted form
       MyForm =ProfileForm(request.POST, request.FILES)
       
       if MyForm.is_valid():
@@ -19,10 +23,12 @@ def filetype(request):
          obj.fname=MyForm.cleaned_data["filename"]
          obj.save()
          saved = True
+         
    else:
-      MyForm = IngestData()
+      MyForm = IngestData()'''
 		
-   return render(request, 'saved.html', locals())
+   return render(request, 'saved.html',{'context':context})
+
 def auth(request):
     if request.method== "POST":
         nm=request.POST.get('username')
